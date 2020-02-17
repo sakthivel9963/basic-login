@@ -12,6 +12,7 @@ class Form extends Component<userProps, userState> {
     this.state = {
       email: '',
       password: '',
+      status: false,
     };
     localStorage.removeItem('token');
   }
@@ -33,14 +34,22 @@ class Form extends Component<userProps, userState> {
       );
       if (result) {
         localStorage.setItem('token', result.token);
+        this.setState({
+          status: false,
+        });
       }
-      console.log(localStorage.getItem('token'));
     } catch (error) {
       console.error(error);
+      this.setState({
+        status: true,
+      });
     }
   };
 
   valueChange = (e: { target: { id: string; value: any } }) => {
+    this.setState({
+      status: false,
+    });
     const { id, value } = e.target;
     this.setState({
       [id]: value,
@@ -70,6 +79,9 @@ class Form extends Component<userProps, userState> {
                 onChange={(e) => this.valueChange(e)}
               />
             </div>
+            {this.state.status && (
+              <p style={{ color: 'red' }}>username or password incorrect</p>
+            )}
             <button type="submit" className="btn btn-success">
               Submit
             </button>
