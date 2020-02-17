@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+
 interface userProps {}
 
 interface userState {
@@ -11,13 +13,31 @@ class Form extends Component<userProps, userState> {
       email: '',
       password: '',
     };
+    localStorage.removeItem('token');
   }
 
-  formSubmit = (e: { preventDefault: () => void }) => {
+  formSubmit = async (e: { preventDefault: () => void }) => {
     e.preventDefault();
     console.log(
       `email : ${this.state.email} -> password : ${this.state.password}`
     );
+    const email = this.state.email;
+    const password = this.state.password;
+    try {
+      const { data: result } = await axios.post(
+        `http://localhost:3000/users/login`,
+        {
+          username: email,
+          password: password,
+        }
+      );
+      if (result) {
+        localStorage.setItem('token', result.token);
+      }
+      console.log(localStorage.getItem('token'));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   valueChange = (e: { target: { id: string; value: any } }) => {
