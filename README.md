@@ -44,3 +44,7 @@ You can learn more in the [Create React App documentation](https://facebook.gith
 To learn React, check out the [React documentation](https://reactjs.org/).
 
 # basic-login
+
+[setting up prettier](https://dev.to/benweiser/how-to-set-up-eslint-typescript-prettier-with-create-react-app-3675)
+
+### `npm i -D eslint-config-prettier eslint-config-react eslint-plugin-prettier prettier`

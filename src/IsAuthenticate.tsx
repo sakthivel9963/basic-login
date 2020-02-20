@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 
-interface userProps {}
+interface UserProps {}
 
-interface userState {
+interface UserState {
   token: string;
 }
 
-class IsAuthenticate extends Component<userProps, userState> {
-  constructor(props: Readonly<userProps>) {
+class IsAuthenticate extends Component<UserProps, UserState> {
+  constructor(props: Readonly<UserProps>) {
     super(props);
     this.state = {
       token: localStorage.getItem('token')!,
@@ -20,10 +20,10 @@ class IsAuthenticate extends Component<userProps, userState> {
     const { token } = this.state;
     try {
       const { data: result } = await axios.get(
-        `http://localhost:3000/ping/is-authenticated`,
+        'http://localhost:3000/ping/is-authenticated',
         {
           headers: { access_token: token },
-        }
+        },
       );
       if (result) {
         localStorage.setItem('token', result.token);
@@ -34,19 +34,19 @@ class IsAuthenticate extends Component<userProps, userState> {
   };
 
   render() {
-    if (this.state.token) {
+    const { token } = this.state;
+    if (token) {
       return (
         <div>
           <h2>Is Authenticate</h2>
         </div>
       );
-    } else {
-      return (
-        <div>
-          <h2>Not Authenticate</h2>
-        </div>
-      );
     }
+    return (
+      <div>
+        <h2>Not Authenticate</h2>
+      </div>
+    );
   }
 }
 
